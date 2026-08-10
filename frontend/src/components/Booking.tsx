@@ -7,6 +7,7 @@ import {
   site,
   whatsappUrl,
 } from "@/lib/site";
+import { postBooking } from "@/lib/api";
 
 type Step = 0 | 1 | 2 | 3 | 4 | 5;
 
@@ -90,6 +91,8 @@ export function Booking() {
   const selectedDate = selectedKey ? parseDateKey(selectedKey) : null;
   const slots = selectedDate ? availableSlotsFor(selectedDate) : allSlots;
 
+  const [submitting, setSubmitting] = useState(false);
+
   const summary = selectedDate && service && barber
     ? {
         name: clientName.trim(),
@@ -100,11 +103,17 @@ export function Booking() {
       }
     : null;
 
-  const confirm = () => {
-    if (!summary || !summary.name) return;
-    const url = whatsappUrl(bookingWhatsAppMessage(summary));
-    window.open(url, "_blank", "noopener,noreferrer");
-    setDone(true);
+  const confirm = async () => {
+    if (!summary || !summary.name || submitting) return;
+    setSubmitting(true);
+    try {
+      await postBooking(summary);
+    } finally {
+      const url = whatsappUrl(bookingWhatsAppMessage(summary));
+      window.open(url, "_blank", "noopener,noreferrer");
+      setDone(true);
+      setSubmitting(false);
+    }
   };
 
   const reset = () => {
@@ -349,11 +358,11 @@ export function Booking() {
                   <button
                     type="button"
                     data-cursor="button"
-                    disabled={!clientName.trim()}
-                    onClick={confirm}
+                    disabled={!clientName.trim() || submitting}
+                    onClick={() => void confirm()}
                     className="w-full border border-[var(--gold)] bg-[var(--gold)] py-4 font-mono text-[11px] tracking-[0.3em] text-[var(--onyx)] transition-all hover:bg-transparent hover:text-[var(--gold)] disabled:cursor-not-allowed disabled:opacity-40"
                   >
-                    CONFIRMAR NO WHATSAPP
+                    {submitting ? "VALIDANDO…" : "CONFIRMAR NO WHATSAPP"}
                   </button>
                   <p className="text-center text-xs text-[var(--muted-foreground)]">
                     Abre o WhatsApp com os dados preenchidos para a barbearia confirmar.

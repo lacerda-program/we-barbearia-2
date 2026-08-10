@@ -1,6 +1,72 @@
-node_modules
-dist
-.env
-.env.local
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build
+dist/
+**/dist/
+build/
+**/build/
+.next/
+.nuxt/
+.turbo/
 *.tsbuildinfo
+
+# Environment & secrets — NEVER commit
+.env
+.env.*
+!.env.example
+!**/.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+id_rsa
+id_rsa.*
+*.secret
+secrets/
+credentials/
+**/credentials.json
+service-account*.json
+firebase*.json
+.aws/
+.gcloud/
+
+# Logs & debug
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS / IDE
 .DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+*.swo
+
+# Test / coverage
+coverage/
+.nyc_output/
+
+# Local / temp
+tmp/
+temp/
+.upload/
+uploads/
+*.local
+
+.vercel/
+.vercel
+
+# Vite
+frontend/.vite/
+
+# Backend runtime data
+backend/data/
+backend/uploads/
