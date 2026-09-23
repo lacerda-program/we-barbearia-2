@@ -22,10 +22,11 @@ export const site = {
   },
 
   hours: {
-    label: "Ter—Sáb · 10h às 21h",
-    openDays: [2, 3, 4, 5, 6] as number[],
-    openHour: 10,
-    closeHour: 21,
+    label: "Seg—Sex · 9h às 20h",
+    closedLabel: "Fechado sábado e domingo",
+    openDays: [1, 2, 3, 4, 5] as number[],
+    openHour: 9,
+    closeHour: 20,
   },
 
   /** Sem agendamento — estimativa honesta, não “ao vivo” */
@@ -239,20 +240,24 @@ export function whatsappUrl(message?: string): string {
 
 export function bookingWhatsAppMessage(data: {
   name: string;
+  phone?: string;
   service: string;
   barber: string;
   dateLabel: string;
   time: string;
 }): string {
   return [
-    `Olá! Quero agendar na ${site.name}.`,
+    `Olá! Gostaria de reservar um horário na ${site.name}.`,
     ``,
-    `👤 Nome: ${data.name}`,
-    `✂ Serviço: ${data.service}`,
-    `🧔 Barbeiro: ${data.barber}`,
-    `📅 Data: ${data.dateLabel}`,
-    `🕐 Horário: ${data.time}`,
+    `Nome: ${data.name}`,
+    data.phone ? `WhatsApp: ${data.phone}` : "",
+    `Serviço: ${data.service}`,
+    `Profissional: ${data.barber}`,
+    `Data: ${data.dateLabel}`,
+    `Horário: ${data.time}`,
     ``,
-    `Poderiam confirmar a disponibilidade?`,
-  ].join("\n");
+    `Podem confirmar a disponibilidade, por favor?`,
+  ]
+    .filter((line) => line !== "")
+    .join("\n");
 }

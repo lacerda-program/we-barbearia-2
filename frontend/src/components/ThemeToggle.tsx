@@ -19,7 +19,8 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={() => setDay((d) => !d)}
-      className="fixed top-24 right-6 z-40 flex h-9 w-9 items-center justify-center border border-[var(--border)] bg-[var(--background)]/80 backdrop-blur-sm transition-colors hover:border-[var(--gold)]/40 md:top-28 md:right-8"
+      className="fixed top-24 right-6 z-40 flex h-9 w-9 items-center justify-center border border-[var(--border)] bg-[var(--background)]/80 backdrop-blur-sm transition-colors hover:border-[var(--gold)]/40 md:top-28 md:right-8 ml-auto
+        transition: background-color 0.3s, color 0.3s;"
       aria-label="Alternar tema"
     >
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="1.5">

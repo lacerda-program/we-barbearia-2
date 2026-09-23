@@ -37,6 +37,9 @@ export function Location() {
                   Horário
                 </div>
                 <p className="text-sm font-light">{site.hours.label}</p>
+                <p className="mt-1 text-xs font-light text-[var(--muted-foreground)]">
+                  {site.hours.closedLabel}
+                </p>
                 <p className="mt-2 text-xs font-light text-[var(--muted-foreground)]">
                   Walk-in ≈ {site.avgWalkInWait}
                 </p>
